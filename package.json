@@ -1,0 +1,58 @@
+{
+  "name": "local-pkg",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.cjs",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.mjs"
+    }
+  },
+  "funding": "https://github.com/sponsors/antfu",
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "bugs": {
+    "url": "https://github.com/antfu/local-pkg/issues"
+  },
+  "homepage": "https://github.com/antfu/local-pkg#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/local-pkg.git"
+  },
+  "keywords": [
+    "package"
+  ],
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "prepublishOnly": "nr build",
+    "release": "bumpp --commit --push --tag && pnpm publish",
+    "lint": "eslint \"{src,test}/**/*.ts\"",
+    "lint:fix": "nr lint -- --fix",
+    "test": "node test/cjs.cjs && node test/esm.mjs"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.7.0",
+    "@antfu/ni": "^0.7.0",
+    "@types/chai": "^4.2.22",
+    "@types/jasmine": "^3.9.1",
+    "@types/node": "^16.7.1",
+    "bumpp": "^6.0.6",
+    "chai": "^4.3.4",
+    "eslint": "^7.32.0",
+    "esno": "^0.9.1",
+    "jasmine": "^3.9.0",
+    "typescript": "^4.3.5",
+    "uvu": "^0.5.1"
+  },
+  "dependencies": {
+    "mlly": "^0.2.2"
+  }
+}
