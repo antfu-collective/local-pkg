@@ -19,3 +19,7 @@ export interface PackageResolvingOptions {
 export function isPackageExists(name: string, options?: PackageResolvingOptions): boolean
 
 export function getPackageInfo(name: string, options?: PackageResolvingOptions): Promise<PackageInfo | undefined>
+
+export function resolve(path: string, options?: PackageResolvingOptions): string | undefined
+
+export function importModule<T = any>(path: string): Promise<T>

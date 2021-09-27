@@ -2,6 +2,48 @@ const { dirname, join } = require('path')
 const { existsSync } = require('fs')
 const fs = require('fs').promises
 
+function resolve(name, options) {
+  try {
+    return require.resolve(name, options)
+  }
+  catch (e) {
+    return undefined
+  }
+}
+
+function importModule(path) {
+  const mod = require(path)
+  if (mod.__esModule)
+    return Promise.resolve(mod)
+  else
+    return Promise.resolve({ default: mod })
+}
+
+function isPackageExists(name, options) {
+  return !!resolvePackage(name, options)
+}
+
+async function getPackageInfo(name, options) {
+  const entry = resolvePackage(name, options)
+  if (!entry)
+    return
+
+  const packageJsonPath = searchPackageJSON(entry)
+
+  if (!packageJsonPath)
+    return
+
+  const pkg = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
+
+  return {
+    name,
+    version: pkg.version,
+    rootPath: dirname(packageJsonPath),
+    packageJsonPath,
+    packageJson: pkg,
+  }
+}
+
 function resolvePackage(name, options = {}) {
   try {
     return require.resolve(`${name}/package.json`, options)
@@ -35,32 +77,9 @@ function searchPackageJSON(dir) {
   return packageJsonPath
 }
 
-function isPackageExists(name, options = {}) {
-  return !!resolvePackage(name, options)
-}
-
-async function getPackageInfo(name, options) {
-  const entry = resolvePackage(name, options)
-  if (!entry)
-    return
-
-  const packageJsonPath = searchPackageJSON(entry)
-
-  if (!packageJsonPath)
-    return
-
-  const pkg = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
-
-  return {
-    name,
-    version: pkg.version,
-    rootPath: dirname(packageJsonPath),
-    packageJsonPath,
-    packageJson: pkg,
-  }
-}
-
 module.exports = {
+  resolve,
+  importModule,
   isPackageExists,
   getPackageInfo,
 }

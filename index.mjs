@@ -4,6 +4,44 @@ import { createCommonJS } from 'mlly'
 
 const { require } = createCommonJS(import.meta.url)
 
+export function resolve(name, options) {
+  try {
+    return require.resolve(name, options)
+  }
+  catch (e) {
+    return undefined
+  }
+}
+
+export function importModule(path) {
+  return import(path)
+}
+
+export function isPackageExists(name, options) {
+  return !!resolvePackage(name, options)
+}
+
+export async function getPackageInfo(name, options) {
+  const entry = resolvePackage(name, options)
+  if (!entry)
+    return
+
+  const packageJsonPath = searchPackageJSON(entry)
+
+  if (!packageJsonPath)
+    return
+
+  const pkg = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
+
+  return {
+    name,
+    version: pkg.version,
+    rootPath: dirname(packageJsonPath),
+    packageJsonPath,
+    packageJson: pkg,
+  }
+}
+
 function resolvePackage(name, options = {}) {
   try {
     return require.resolve(`${name}/package.json`, options)
@@ -35,29 +73,4 @@ function searchPackageJSON(dir) {
   }
 
   return packageJsonPath
-}
-
-export function isPackageExists(name, options) {
-  return !!resolvePackage(name, options)
-}
-
-export async function getPackageInfo(name, options) {
-  const entry = resolvePackage(name, options)
-  if (!entry)
-    return
-
-  const packageJsonPath = searchPackageJSON(entry)
-
-  if (!packageJsonPath)
-    return
-
-  const pkg = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
-
-  return {
-    name,
-    version: pkg.version,
-    rootPath: dirname(packageJsonPath),
-    packageJsonPath,
-    packageJson: pkg,
-  }
 }
