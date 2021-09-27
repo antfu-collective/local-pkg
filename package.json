@@ -32,10 +32,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "prepublishOnly": "nr build",
     "release": "bumpp --commit --push --tag && pnpm publish",
-    "lint": "eslint \"{src,test}/**/*.ts\"",
-    "lint:fix": "nr lint -- --fix",
     "test": "node test/cjs.cjs && node test/esm.mjs"
   },
   "devDependencies": {
