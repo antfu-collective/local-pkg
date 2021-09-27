@@ -1,7 +1,7 @@
 {
   "name": "local-pkg",
   "version": "0.0.1",
-  "description": "",
+  "description": "Get information on local packages.",
   "main": "index.cjs",
   "module": "index.mjs",
   "types": "index.d.ts",
