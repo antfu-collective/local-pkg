@@ -1,6 +1,6 @@
 {
   "name": "local-pkg",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.cjs",
   "module": "index.mjs",
