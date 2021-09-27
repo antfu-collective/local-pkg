@@ -2,7 +2,7 @@ const { dirname, join } = require('path')
 const { existsSync } = require('fs')
 const fs = require('fs').promises
 
-function resolve(name, options) {
+function resolveModule(name, options) {
   try {
     return require.resolve(name, options)
   }
@@ -78,8 +78,10 @@ function searchPackageJSON(dir) {
 }
 
 module.exports = {
-  resolve,
+  resolveModule,
   importModule,
   isPackageExists,
   getPackageInfo,
 }
+
+Object.defineProperty(module.exports, '__esModule', { value: true, enumerable: false })

@@ -1,11 +1,11 @@
 import { join } from 'path'
 import { expect } from 'chai'
-import { getPackageInfo, isPackageExists, resolve, importModule } from '../index.mjs'
+import { getPackageInfo, isPackageExists, resolveModule, importModule } from '../index.mjs'
 
 console.warn('===== ESM =====')
 
 async function run() {
-  expect(resolve('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
+  expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
   expect(isPackageExists('mlly')).to.eq(true)
   expect(isPackageExists('hi')).to.eq(false)

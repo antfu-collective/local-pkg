@@ -1,11 +1,11 @@
 const { join } = require('path')
 const { expect } = require('chai')
-const { getPackageInfo, isPackageExists, resolve, importModule } = require('../index.cjs')
+const { getPackageInfo, isPackageExists, resolveModule, importModule } = require('../index.cjs')
 
 console.warn('===== CJS =====')
 
 async function run() {
-  expect(resolve('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
+  expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
   expect(isPackageExists('mlly')).to.eq(true)
   expect(isPackageExists('hi')).to.eq(false)

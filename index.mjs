@@ -4,7 +4,7 @@ import { createCommonJS } from 'mlly'
 
 const { require } = createCommonJS(import.meta.url)
 
-export function resolve(name, options) {
+export function resolveModule(name, options) {
   try {
     return require.resolve(name, options)
   }
