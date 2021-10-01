@@ -1,6 +1,6 @@
 {
   "name": "local-pkg",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Get information on local packages.",
   "keywords": [
     "package"
