@@ -1,3 +1,5 @@
+export * from './dist/shared'
+
 export interface PackageInfo {
   name: string
   rootPath: string

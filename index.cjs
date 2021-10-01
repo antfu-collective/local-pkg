@@ -1,6 +1,7 @@
 const { dirname, join } = require('path')
 const { existsSync } = require('fs')
 const fs = require('fs').promises
+const { loadPackageJSON, isPackageListed } = require('./dist/shared.cjs')
 
 function resolveModule(name, options) {
   try {
@@ -82,6 +83,8 @@ module.exports = {
   importModule,
   isPackageExists,
   getPackageInfo,
+  loadPackageJSON,
+  isPackageListed,
 }
 
 Object.defineProperty(module.exports, '__esModule', { value: true, enumerable: false })

@@ -1,6 +1,7 @@
 const { join } = require('path')
 const { expect } = require('chai')
-const { getPackageInfo, isPackageExists, resolveModule, importModule } = require('../index.cjs')
+const { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } = require('../index.cjs')
+const pkgJSON = require('../package.json')
 
 console.warn('===== CJS =====')
 
@@ -25,6 +26,8 @@ async function run() {
 
   const { slash } = (await importModule('@antfu/utils'))
   expect(slash('foo\\bar')).to.eq('foo/bar')
+
+  expect(await loadPackageJSON()).to.eql(pkgJSON)
 }
 
 run()

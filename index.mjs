@@ -2,6 +2,8 @@ import { join, dirname } from 'path'
 import { promises as fs, existsSync } from 'fs'
 import { createCommonJS } from 'mlly'
 
+export { loadPackageJSON, isPackageListed } from './dist/shared.mjs'
+
 const { require } = createCommonJS(import.meta.url)
 
 export function resolveModule(name, options) {

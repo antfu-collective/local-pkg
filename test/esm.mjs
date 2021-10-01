@@ -1,6 +1,7 @@
 import { join } from 'path'
+import { promises as fs } from 'fs'
 import { expect } from 'chai'
-import { getPackageInfo, isPackageExists, resolveModule, importModule } from '../index.mjs'
+import { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } from '../index.mjs'
 
 console.warn('===== ESM =====')
 
@@ -25,6 +26,8 @@ async function run() {
 
   const { slash } = (await importModule('@antfu/utils'))
   expect(slash('foo\\bar')).to.eq('foo/bar')
+
+  expect(await loadPackageJSON()).to.eql(JSON.parse(await fs.readFile('./package.json'), 'utf-8'))
 }
 
 run()
