@@ -5,6 +5,9 @@
   "keywords": [
     "package"
   ],
+  "engines": {
+    "node": ">=14"
+  },
   "homepage": "https://github.com/antfu/local-pkg#readme",
   "bugs": {
     "url": "https://github.com/antfu/local-pkg/issues"
