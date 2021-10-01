@@ -36,4 +36,4 @@ jobs:
         run: nci
 
       - name: Test
-        run: nr test
+        run: nr build && nr test
