@@ -16,7 +16,11 @@ export function resolveModule(name, options) {
 }
 
 export function importModule(path) {
-  return import(path)
+  return import(path).then((i) => {
+    if (i && i.default && i.default.__esModule)
+      return i.default
+    return i
+  })
 }
 
 export function isPackageExists(name, options) {
