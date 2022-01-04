@@ -11,12 +11,8 @@ specifiers:
   eslint: ^7.32.0
   esno: ^0.9.1
   find-up: ^6.1.0
-  mlly: ^0.2.2
   tsup: ^5.2.1
   typescript: ^4.3.5
-
-dependencies:
-  mlly: 0.2.4
 
 devDependencies:
   '@antfu/eslint-config': 0.7.0_eslint@7.32.0+typescript@4.3.5
@@ -657,12 +653,6 @@ packages:
     resolution: {integrity: sha512-lGzLKcioL90C7wMczpkY0n/oART3MbBa8R9OFGE1rJxoVI86u4WAGfEk8Wjv10eKSyTHVGkSo3bvBylCEtk7LA==}
     engines: {node: '>=6'}
     dev: true
-
-  /builtins/4.0.0:
-    resolution: {integrity: sha512-qC0E2Dxgou1IHhvJSLwGDSTvokbRovU5zZFuDY6oY8Y2lF3nGt5Ad8YZK7GMtqzY84Wu7pXTPeHQeHcXSXsRhw==}
-    dependencies:
-      semver: 7.3.5
-    dev: false
 
   /bumpp/6.0.6:
     resolution: {integrity: sha512-mQsnIGsLcH9weV8fluJAAu+Q1ITp1XfPhNBUlXb3MZRhCVLx/i1A+ebOMqLos2kYdqPfBGOyROOj+YAEwZMcFA==}
@@ -1718,12 +1708,6 @@ packages:
       resolve-from: 5.0.0
     dev: true
 
-  /import-meta-resolve/1.1.1:
-    resolution: {integrity: sha512-JiTuIvVyPaUg11eTrNDx5bgQ/yMKMZffc7YSjvQeSMXy58DO2SQ8BtAf3xteZvmzvjYh14wnqNjL8XVeDy2o9A==}
-    dependencies:
-      builtins: 4.0.0
-    dev: false
-
   /imurmurhash/0.1.4:
     resolution: {integrity: sha1-khi5srkoojixPcT7a21XbyMUU+o=}
     engines: {node: '>=0.8.19'}
@@ -2066,6 +2050,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+    dev: true
 
   /merge-stream/2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -2098,12 +2083,6 @@ packages:
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: true
-
-  /mlly/0.2.4:
-    resolution: {integrity: sha512-Wkv+SoSMoHUe9jkMKId08gj6JlSmCZ8TKGKhR3QcTFXaYml23oSk5qZWEDsvbzljeY3YZMnjzkSa365HaMzIJA==}
-    dependencies:
-      import-meta-resolve: 1.1.1
-    dev: false
 
   /ms/2.0.0:
     resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=}
@@ -2626,6 +2605,7 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+    dev: true
 
   /shebang-command/2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -3027,6 +3007,7 @@ packages:
 
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+    dev: true
 
   /yaml-eslint-parser/0.3.2:
     resolution: {integrity: sha512-32kYO6kJUuZzqte82t4M/gB6/+11WAuHiEnK7FreMo20xsCKPeFH5tDBU7iWxR7zeJpNnMXfJyXwne48D0hGrg==}

@@ -8,14 +8,14 @@ console.warn('===== CJS =====')
 async function run() {
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
-  expect(isPackageExists('mlly')).to.eq(true)
+  expect(isPackageExists('tsup')).to.eq(true)
   expect(isPackageExists('hi')).to.eq(false)
   expect(isPackageExists('esno')).to.eq(true)
 
-  const info1 = await getPackageInfo('mlly')
+  const info1 = await getPackageInfo('tsup')
   expect(!!info1).to.eq(true)
-  expect(info1.name).to.eq('mlly')
-  expect(info1.packageJson.name).to.eq('mlly')
+  expect(info1.name).to.eq('tsup')
+  expect(info1.packageJson.name).to.eq('tsup')
 
   const info2 = await getPackageInfo('hi')
   expect(!!info2).to.eq(false)

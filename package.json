@@ -41,9 +41,6 @@
     "release": "bumpp --commit --push --tag && pnpm publish",
     "test": "node test/cjs.cjs && node test/esm.mjs"
   },
-  "dependencies": {
-    "mlly": "^0.2.2"
-  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.7.0",
     "@antfu/ni": "^0.7.0",

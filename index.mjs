@@ -1,14 +1,14 @@
 import { join, dirname } from 'path'
 import { promises as fs, existsSync } from 'fs'
-import { createCommonJS } from 'mlly'
+import { createRequire } from 'module'
 
 export { loadPackageJSON, isPackageListed } from './dist/shared.mjs'
 
-const { require } = createCommonJS(import.meta.url)
+const _require = createRequire(import.meta.url)
 
 export function resolveModule(name, options) {
   try {
-    return require.resolve(name, options)
+    return _require.resolve(name, options)
   }
   catch (e) {
     return undefined
@@ -50,12 +50,12 @@ export async function getPackageInfo(name, options) {
 
 function resolvePackage(name, options = {}) {
   try {
-    return require.resolve(`${name}/package.json`, options)
+    return _require.resolve(`${name}/package.json`, options)
   }
   catch {
   }
   try {
-    return require.resolve(name, options)
+    return _require.resolve(name, options)
   }
   catch (e) {
     if (e.code !== 'MODULE_NOT_FOUND')
