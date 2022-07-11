@@ -13,17 +13,17 @@ npm i local-pkg
 ## Usage
 
 ```ts
-import { 
-  isPackageExists,
+import {
   getPackageInfo,
-  resolveModule,
   importModule,
-} from 'local-pkg' 
+  isPackageExists,
+  resolveModule,
+} from 'local-pkg'
 
 isPackageExists('local-pkg') // true
 isPackageExists('foo') // false
 
-await getPackageInfo('local-pkg') 
+await getPackageInfo('local-pkg')
 /* {
  *   name: "local-pkg",
  *   version: "0.1.0",

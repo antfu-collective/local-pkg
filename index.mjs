@@ -1,5 +1,5 @@
-import { join, dirname } from 'path'
-import { promises as fs, existsSync } from 'fs'
+import { dirname, join } from 'path'
+import { existsSync, promises as fs } from 'fs'
 import { createRequire } from 'module'
 
 export { loadPackageJSON, isPackageListed } from './dist/shared.mjs'
