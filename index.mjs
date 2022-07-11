@@ -1,5 +1,5 @@
-import { join, dirname } from 'path'
-import { promises as fs, existsSync } from 'fs'
+import { dirname, join } from 'path'
+import { existsSync, promises as fs, readFileSync } from 'fs'
 import { createRequire } from 'module'
 
 export { loadPackageJSON, isPackageListed } from './dist/shared.mjs'
@@ -27,17 +27,36 @@ export function isPackageExists(name, options) {
   return !!resolvePackage(name, options)
 }
 
-export async function getPackageInfo(name, options) {
+function getPackageJsonPath(name, options) {
   const entry = resolvePackage(name, options)
   if (!entry)
     return
 
-  const packageJsonPath = searchPackageJSON(entry)
+  return searchPackageJSON(entry)
+}
 
+export async function getPackageInfo(name, options) {
+  const packageJsonPath = getPackageJsonPath(name, options)
   if (!packageJsonPath)
     return
 
   const pkg = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
+
+  return {
+    name,
+    version: pkg.version,
+    rootPath: dirname(packageJsonPath),
+    packageJsonPath,
+    packageJson: pkg,
+  }
+}
+
+export function getPackageInfoSync(name, options) {
+  const packageJsonPath = getPackageJsonPath(name, options)
+  if (!packageJsonPath)
+    return
+
+  const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'))
 
   return {
     name,
