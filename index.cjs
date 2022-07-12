@@ -1,5 +1,5 @@
 const { dirname, join } = require('path')
-const { existsSync } = require('fs')
+const { existsSync, readFileSync } = require('fs')
 const fs = require('fs').promises
 const { loadPackageJSON, isPackageListed } = require('./dist/shared.cjs')
 
@@ -24,17 +24,35 @@ function isPackageExists(name, options) {
   return !!resolvePackage(name, options)
 }
 
-async function getPackageInfo(name, options) {
+function getPackageJsonPath(name, options) {
   const entry = resolvePackage(name, options)
   if (!entry)
     return
+  return searchPackageJSON(entry)
+}
 
-  const packageJsonPath = searchPackageJSON(entry)
-
+async function getPackageInfo(name, options) {
+  const packageJsonPath = getPackageJsonPath(name, options)
   if (!packageJsonPath)
     return
 
   const pkg = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
+
+  return {
+    name,
+    version: pkg.version,
+    rootPath: dirname(packageJsonPath),
+    packageJsonPath,
+    packageJson: pkg,
+  }
+}
+
+function getPackageInfoSync(name, options) {
+  const packageJsonPath = getPackageJsonPath(name, options)
+  if (!packageJsonPath)
+    return
+
+  const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'))
 
   return {
     name,
@@ -83,6 +101,7 @@ module.exports = {
   importModule,
   isPackageExists,
   getPackageInfo,
+  getPackageInfoSync,
   loadPackageJSON,
   isPackageListed,
 }
