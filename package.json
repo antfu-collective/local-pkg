@@ -1,6 +1,7 @@
 {
   "name": "local-pkg",
   "version": "0.4.1",
+  "packageManager": "pnpm@7.5.0",
   "description": "Get information on local packages.",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -38,7 +39,8 @@
   "scripts": {
     "prepublishOnly": "nr build",
     "build": "tsup shared.ts --format esm,cjs --dts && esno scripts/postbuild.ts",
-    "release": "bumpp --commit --push --tag && pnpm publish",
+    "lint": "eslint .",
+    "release": "bumpp && npm publish",
     "test": "node test/cjs.cjs && node test/esm.mjs"
   },
   "devDependencies": {
