@@ -24,7 +24,7 @@ async function run() {
   expect(!!info3).to.eq(true)
   expect(info3.rootPath).to.contain(join('node_modules', 'esno'))
 
-  const { slash } = (await importModule('@antfu/utils'))
+  const { slash } = (await importModule('@antfu/utils').then(r => r.default))
   expect(slash('foo\\bar')).to.eq('foo/bar')
 
   expect(await loadPackageJSON()).to.eql(pkgJSON)
