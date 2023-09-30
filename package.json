@@ -22,13 +22,13 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./shared": {
       "types": "./dist/shared.d.ts",
-      "require": "./dist/shared.cjs",
-      "import": "./dist/shared.mjs"
+      "import": "./dist/shared.mjs",
+      "require": "./dist/shared.cjs"
     }
   },
   "main": "dist/index.cjs",
