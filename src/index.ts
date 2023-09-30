@@ -14,6 +14,11 @@ export interface PackageInfo {
 
 export interface PackageResolvingOptions {
   paths?: string[]
+
+  /**
+   * @default 'auto'
+   * Resolve path as posix or win32
+   */
   platform?: 'posix' | 'win32' | 'auto'
 }
 
