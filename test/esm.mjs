@@ -1,21 +1,21 @@
 import { join } from 'path'
 import { promises as fs } from 'fs'
 import { expect } from 'chai'
-import { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } from '../index.mjs'
+import { getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../dist/index.mjs'
 
 console.warn('===== ESM =====')
 
 async function run() {
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
-  expect(isPackageExists('tsup')).to.eq(true)
+  expect(isPackageExists('unbuild')).to.eq(true)
   expect(isPackageExists('hi')).to.eq(false)
   expect(isPackageExists('esno')).to.eq(true)
 
-  const info1 = await getPackageInfo('tsup')
+  const info1 = await getPackageInfo('unbuild')
   expect(!!info1).to.eq(true)
-  expect(info1.name).to.eq('tsup')
-  expect(info1.packageJson.name).to.eq('tsup')
+  expect(info1.name).to.eq('unbuild')
+  expect(info1.packageJson.name).to.eq('unbuild')
 
   const info2 = await getPackageInfo('hi')
   expect(!!info2).to.eq(false)

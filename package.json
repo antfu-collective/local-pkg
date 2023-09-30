@@ -1,5 +1,6 @@
 {
   "name": "local-pkg",
+  "type": "module",
   "version": "0.4.3",
   "packageManager": "pnpm@7.5.0",
   "description": "Get information on local packages.",
@@ -20,29 +21,37 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "require": "./index.cjs",
-      "import": "./index.mjs"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./shared": {
+      "types": "./dist/shared.d.ts",
+      "require": "./dist/shared.cjs",
+      "import": "./dist/shared.mjs"
     }
   },
-  "main": "index.cjs",
-  "module": "index.mjs",
-  "types": "index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "index.cjs",
-    "index.mjs",
-    "index.d.ts"
+    "dist"
   ],
   "engines": {
     "node": ">=14"
   },
   "scripts": {
     "prepublishOnly": "nr build",
-    "build": "tsup shared.ts --format esm,cjs --dts && esno scripts/postbuild.ts",
+    "build": "unbuild",
     "lint": "eslint .",
     "release": "bumpp && npm publish",
-    "test": "node test/cjs.cjs && node test/esm.mjs"
+    "test": "node test/cjs.cjs && node test/esm.mjs && vitest"
+  },
+  "dependencies": {
+    "find-up": "^6.3.0",
+    "mlly": "^1.4.2",
+    "pkg-types": "^1.0.3",
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.34.1",
@@ -54,8 +63,8 @@
     "chai": "^4.3.7",
     "eslint": "^8.32.0",
     "esno": "^0.16.3",
-    "find-up": "^6.3.0",
-    "tsup": "^6.5.0",
-    "typescript": "^4.9.4"
+    "typescript": "^5.1.6",
+    "unbuild": "^2.0.0",
+    "vitest": "^0.34.6"
   }
 }

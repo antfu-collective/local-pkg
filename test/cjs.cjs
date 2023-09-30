@@ -1,6 +1,6 @@
 const { join } = require('path')
 const { expect } = require('chai')
-const { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } = require('../index.cjs')
+const { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } = require('../dist/index.cjs')
 const pkgJSON = require('../package.json')
 
 console.warn('===== CJS =====')
