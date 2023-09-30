@@ -1,6 +1,6 @@
 import { dirname, join } from 'path'
 import fs from 'fs'
-import { resolvePathSync } from 'mlly'
+import { createRequire } from 'module'
 import type { PackageJson } from 'pkg-types'
 export * from './shared'
 export interface PackageInfo {
@@ -19,11 +19,11 @@ export interface PackageExistsOptions extends PackageResolvingOptions {
   version?: string
 }
 
+const require = createRequire(import.meta.url)
+
 export function resolveModule(name: string, options: PackageResolvingOptions = {}) {
   try {
-    return resolvePathSync(name, {
-      url: options.paths,
-    })
+    return require.resolve(name, options)
   }
   catch (e) {
     return undefined
@@ -83,16 +83,12 @@ export function getPackageInfoSync(name: string, options: PackageResolvingOption
 
 function resolvePackage(name: string, options: PackageResolvingOptions = {}) {
   try {
-    return resolvePathSync(`${name}/package.json`, {
-      url: options.paths,
-    })
+    return require.resolve(`${name}/package.json`, options)
   }
   catch {
   }
   try {
-    return resolvePathSync(name, {
-      url: options.paths,
-    })
+    return require.resolve(name, options)
   }
   catch (e: any) {
     // compatible with nodejs and mlly error

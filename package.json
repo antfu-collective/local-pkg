@@ -45,11 +45,9 @@
     "build": "unbuild",
     "lint": "eslint .",
     "release": "bumpp && npm publish",
-    "test": "node test/cjs.cjs && node test/esm.mjs && vitest"
+    "test": "vitest"
   },
   "dependencies": {
-    "find-up": "^6.3.0",
-    "mlly": "^1.4.2",
     "pkg-types": "^1.0.3",
     "semver": "^7.5.4"
   },
@@ -63,6 +61,7 @@
     "chai": "^4.3.7",
     "eslint": "^8.32.0",
     "esno": "^0.16.3",
+    "find-up": "^6.3.0",
     "typescript": "^5.1.6",
     "unbuild": "^2.0.0",
     "vitest": "^0.34.6"
