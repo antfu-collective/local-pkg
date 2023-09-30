@@ -1,4 +1,4 @@
-const { join } = require('path')
+const { join } = require('node:path')
 const { expect } = require('chai')
 const { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } = require('../dist/index.cjs')
 const pkgJSON = require('../package.json')

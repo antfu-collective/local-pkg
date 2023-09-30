@@ -1,5 +1,5 @@
-import { join } from 'path'
-import { promises as fs } from 'fs'
+import { join } from 'node:path'
+import { promises as fs } from 'node:fs'
 import { expect, test } from 'vitest'
 import { getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../src/index'
 

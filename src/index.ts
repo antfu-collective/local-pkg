@@ -1,7 +1,8 @@
-import { dirname, join } from 'path'
-import fs from 'fs'
+import { dirname, join, win32 } from 'node:path'
+import fs from 'node:fs'
 import { interopDefault, resolvePathSync } from 'mlly'
 import type { PackageJson } from 'pkg-types'
+
 export * from './shared'
 export interface PackageInfo {
   name: string
@@ -13,15 +14,25 @@ export interface PackageInfo {
 
 export interface PackageResolvingOptions {
   paths?: string[]
+  platform?: 'posix' | 'win32' | 'auto'
 }
 
-const resolve = (path: string, options: PackageResolvingOptions = {}) => resolvePathSync(path, {
-  url: options.paths,
-})
+function _resolve(path: string, options: PackageResolvingOptions = {}) {
+  if (options.platform === 'auto' || !options.platform)
+    // eslint-disable-next-line n/prefer-global/process
+    options.platform = process.platform === 'win32' ? 'win32' : 'posix'
+
+  const modulePath = resolvePathSync(path, {
+    url: options.paths,
+  })
+  if (options.platform === 'win32')
+    return win32.normalize(modulePath)
+  return modulePath
+}
 
 export function resolveModule(name: string, options: PackageResolvingOptions = {}) {
   try {
-    return resolve(name, options)
+    return _resolve(name, options)
   }
   catch (e) {
     return undefined
@@ -81,12 +92,12 @@ export function getPackageInfoSync(name: string, options: PackageResolvingOption
 
 function resolvePackage(name: string, options: PackageResolvingOptions = {}) {
   try {
-    return resolve(`${name}/package.json`, options)
+    return _resolve(`${name}/package.json`, options)
   }
   catch {
   }
   try {
-    return resolve(name, options)
+    return _resolve(name, options)
   }
   catch (e: any) {
     // compatible with nodejs and mlly error
