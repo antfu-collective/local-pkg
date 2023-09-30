@@ -1,6 +1,6 @@
 import { dirname, join } from 'path'
 import fs from 'fs'
-import { createRequire } from 'module'
+import { interopDefault, resolvePathSync } from 'mlly'
 import type { PackageJson } from 'pkg-types'
 export * from './shared'
 export interface PackageInfo {
@@ -15,15 +15,13 @@ export interface PackageResolvingOptions {
   paths?: string[]
 }
 
-export interface PackageExistsOptions extends PackageResolvingOptions {
-  version?: string
-}
-
-const require = createRequire(import.meta.url)
+const resolve = (path: string, options: PackageResolvingOptions = {}) => resolvePathSync(path, {
+  url: options.paths,
+})
 
 export function resolveModule(name: string, options: PackageResolvingOptions = {}) {
   try {
-    return require.resolve(name, options)
+    return resolve(name, options)
   }
   catch (e) {
     return undefined
@@ -32,12 +30,12 @@ export function resolveModule(name: string, options: PackageResolvingOptions = {
 
 export async function importModule<T = any>(path: string): Promise<T> {
   const i = await import(path)
-  if (i && i.default && i.default.__esModule)
-    return i.default
+  if (i)
+    return interopDefault(i)
   return i
 }
 
-export function isPackageExists(name: string, options: PackageExistsOptions = {}) {
+export function isPackageExists(name: string, options: PackageResolvingOptions = {}) {
   return !!resolvePackage(name, options)
 }
 
@@ -83,12 +81,12 @@ export function getPackageInfoSync(name: string, options: PackageResolvingOption
 
 function resolvePackage(name: string, options: PackageResolvingOptions = {}) {
   try {
-    return require.resolve(`${name}/package.json`, options)
+    return resolve(`${name}/package.json`, options)
   }
   catch {
   }
   try {
-    return require.resolve(name, options)
+    return resolve(name, options)
   }
   catch (e: any) {
     // compatible with nodejs and mlly error
