@@ -1,3 +1,5 @@
+import { PackageJson } from 'pkg-types'
+
 export * from './dist/shared'
 
 export interface PackageInfo {
@@ -5,13 +7,7 @@ export interface PackageInfo {
   rootPath: string
   packageJsonPath: string
   version: string
-  packageJson: {
-    name: string
-    version: string
-    dependencies?: Record<string, string>
-    devDependencies?: Record<string, string>
-    [key: string]: any
-  }
+  packageJson: PackageJson
 }
 
 export interface PackageResolvingOptions {

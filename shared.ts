@@ -1,8 +1,9 @@
 import { existsSync, promises as fs } from 'fs'
 import { findUp } from 'find-up'
+import type { PackageJson } from 'pkg-types'
 
-export async function loadPackageJSON(cwd = process.cwd()): Promise<Record<string, any> | null> {
-  const path = await findUp('package.json', { cwd } as any)
+export async function loadPackageJSON(cwd = process.cwd()): Promise<PackageJson | null> {
+  const path = await findUp('package.json', { cwd })
   if (!path || !existsSync(path))
     return null
   return JSON.parse(await fs.readFile(path, 'utf-8'))

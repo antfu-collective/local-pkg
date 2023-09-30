@@ -44,6 +44,9 @@
     "release": "bumpp && npm publish",
     "test": "node test/cjs.cjs && node test/esm.mjs"
   },
+  "dependencies": {
+    "pkg-types": "^1.0.3"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.34.1",
     "@antfu/ni": "^0.18.8",
