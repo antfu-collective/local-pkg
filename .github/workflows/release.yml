@@ -7,15 +7,21 @@ on:
 
 jobs:
   release:
+    permissions:
+      id-token: write
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+
+      - name: Set node
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
-          registry-url: https://registry.npmjs.org/
-      - run: npx conventional-github-releaser -p angular
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npx changelogithub
         env:
-          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
