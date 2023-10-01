@@ -24,11 +24,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
-    },
-    "./shared": {
-      "types": "./dist/shared.d.ts",
-      "import": "./dist/shared.mjs",
-      "require": "./dist/shared.cjs"
     }
   },
   "main": "dist/index.cjs",

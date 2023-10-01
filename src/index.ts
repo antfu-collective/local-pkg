@@ -1,10 +1,11 @@
 import { dirname, join, win32 } from 'node:path'
 import fs from 'node:fs'
+import fsp from 'node:fs/promises'
 import process from 'node:process'
 import { interopDefault, resolvePathSync } from 'mlly'
 import type { PackageJson } from 'pkg-types'
+import { findUp } from 'find-up'
 
-export * from './shared'
 export interface PackageInfo {
   name: string
   rootPath: string
@@ -127,4 +128,17 @@ function searchPackageJSON(dir: string) {
   }
 
   return packageJsonPath
+}
+
+export async function loadPackageJSON(cwd = process.cwd()): Promise<PackageJson | null> {
+  const path = await findUp('package.json', { cwd } as any)
+  if (!path || !fs.existsSync(path))
+    return null
+  return JSON.parse(await fsp.readFile(path, 'utf-8'))
+}
+
+export async function isPackageListed(name: string, cwd?: string) {
+  const pkg = await loadPackageJSON(cwd) || {}
+
+  return (name in (pkg.dependencies || {})) || (name in (pkg.devDependencies || {}))
 }
