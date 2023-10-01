@@ -1,5 +1,6 @@
 import { dirname, join, win32 } from 'node:path'
 import fs from 'node:fs'
+import process from 'node:process'
 import { interopDefault, resolvePathSync } from 'mlly'
 import type { PackageJson } from 'pkg-types'
 
@@ -24,7 +25,6 @@ export interface PackageResolvingOptions {
 
 function _resolve(path: string, options: PackageResolvingOptions = {}) {
   if (options.platform === 'auto' || !options.platform)
-    // eslint-disable-next-line n/prefer-global/process
     options.platform = process.platform === 'win32' ? 'win32' : 'posix'
 
   const modulePath = resolvePathSync(path, {

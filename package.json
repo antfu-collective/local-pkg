@@ -2,7 +2,7 @@
   "name": "local-pkg",
   "type": "module",
   "version": "0.4.3",
-  "packageManager": "pnpm@7.5.0",
+  "packageManager": "pnpm@8.8.0",
   "description": "Get information on local packages.",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -52,7 +52,7 @@
     "pkg-types": "^1.0.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.43.1",
+    "@antfu/eslint-config": "^1.0.0-beta.18",
     "@antfu/ni": "^0.21.8",
     "@antfu/utils": "^0.7.6",
     "@types/chai": "^4.3.6",

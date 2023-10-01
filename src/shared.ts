@@ -1,8 +1,8 @@
 import { existsSync, promises as fs } from 'node:fs'
+import process from 'node:process'
 import { findUp } from 'find-up'
 import type { PackageJson } from 'pkg-types'
 
-// eslint-disable-next-line n/prefer-global/process
 export async function loadPackageJSON(cwd = process.cwd()): Promise<PackageJson | null> {
   const path = await findUp('package.json', { cwd } as any)
   if (!path || !existsSync(path))

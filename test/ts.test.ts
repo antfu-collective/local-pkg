@@ -1,9 +1,9 @@
 import { join } from 'node:path'
 import { promises as fs } from 'node:fs'
-import { expect, test } from 'vitest'
+import { expect } from 'vitest'
 import { getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../src/index'
 
-test('test by typescript', async () => {
+it('test by typescript', async () => {
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
   expect(isPackageExists('unbuild')).to.eq(true)
