@@ -45,7 +45,8 @@
   },
   "dependencies": {
     "mlly": "^1.4.2",
-    "pkg-types": "^1.0.3"
+    "pkg-types": "^1.0.3",
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^1.0.0-beta.18",
@@ -53,6 +54,7 @@
     "@antfu/utils": "^0.7.6",
     "@types/chai": "^4.3.6",
     "@types/node": "^20.8.0",
+    "@types/semver": "^7.5.3",
     "bumpp": "^9.2.0",
     "chai": "^4.3.10",
     "eslint": "^8.50.0",

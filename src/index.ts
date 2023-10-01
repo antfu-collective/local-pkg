@@ -5,6 +5,7 @@ import process from 'node:process'
 import { interopDefault, resolvePathSync } from 'mlly'
 import type { PackageJson } from 'pkg-types'
 import { findUp } from 'find-up'
+import { satisfies } from 'semver'
 
 export interface PackageInfo {
   name: string
@@ -22,6 +23,13 @@ export interface PackageResolvingOptions {
    * Resolve path as posix or win32
    */
   platform?: 'posix' | 'win32' | 'auto'
+}
+
+export interface PackageExistsOptions extends PackageResolvingOptions {
+  /**
+   * match package version with `semver`
+   */
+  version?: string
 }
 
 function _resolve(path: string, options: PackageResolvingOptions = {}) {
@@ -52,7 +60,13 @@ export async function importModule<T = any>(path: string): Promise<T> {
   return i
 }
 
-export function isPackageExists(name: string, options: PackageResolvingOptions = {}) {
+export function isPackageExists(name: string, options: PackageExistsOptions = {}) {
+  if (options.version) {
+    const info = getPackageInfoSync(name, options)
+    if (!info?.version)
+      return false
+    return satisfies(info.version, options.version)
+  }
   return !!resolvePackage(name, options)
 }
 

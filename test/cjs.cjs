@@ -9,6 +9,13 @@ async function run() {
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
   expect(isPackageExists('unbuild')).to.eq(true)
+  expect(isPackageExists('unbuild', {
+    version: '1.0.0',
+  })).to.eq(false)
+
+  expect(isPackageExists('unbuild', {
+    version: '> 1 || < 3',
+  })).to.eq(true)
   expect(isPackageExists('hi')).to.eq(false)
   expect(isPackageExists('esno')).to.eq(true)
 
