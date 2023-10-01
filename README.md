@@ -21,6 +21,15 @@ import {
 } from 'local-pkg'
 
 isPackageExists('local-pkg') // true
+
+isPackageExists('local-pkg', {
+  version: '> 0.5.1'
+}) // true
+
+isPackageExists('local-pkg', {
+  version: '0.0.0 || 0.1.1'
+}) // false
+
 isPackageExists('foo') // false
 
 await getPackageInfo('local-pkg')
