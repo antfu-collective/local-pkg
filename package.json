@@ -40,6 +40,7 @@
     "build": "unbuild",
     "lint": "eslint .",
     "release": "bumpp && npm publish",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run && node ./test/cjs.cjs && node ./test/esm.mjs"
   },
   "dependencies": {

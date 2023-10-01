@@ -1,33 +1,27 @@
-name: Test
+name: CI
 
 on:
   push:
     branches:
       - main
-      - master
 
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-      fail-fast: false
-
+  lint:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: lts/*
 
       - name: Setup
         run: npm i -g @antfu/ni
@@ -35,5 +29,59 @@ jobs:
       - name: Install
         run: nci
 
+      - name: Lint
+        run: nr lint
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+
+      - name: Setup
+        run: npm i -g @antfu/ni
+
+      - name: Install
+        run: nci
+
+      - name: Typecheck
+        run: nr typecheck
+
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node: [lts/*]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Setup
+        run: npm i -g @antfu/ni
+
+      - name: Install
+        run: nci
+
+      - name: Build
+        run: nr build
+
       - name: Test
-        run: nr build && nr test
+        run: nr test
