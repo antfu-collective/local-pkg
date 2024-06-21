@@ -1,11 +1,16 @@
 import { join } from 'node:path'
 import { promises as fs } from 'node:fs'
 import { expect, it } from 'vitest'
-import { getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../src'
+import { doesPackageExist, getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../src'
 
 it('test by source', async () => {
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
+  expect(doesPackageExist('unbuild')).to.eq(true)
+  expect(doesPackageExist('hi')).to.eql(false)
+  expect(doesPackageExist('esno')).to.eq(true)
+
+  // TODO: remove in a major version
   expect(isPackageExists('unbuild')).to.eq(true)
   expect(isPackageExists('hi')).to.eql(false)
   expect(isPackageExists('esno')).to.eq(true)

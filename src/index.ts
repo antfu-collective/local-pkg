@@ -52,8 +52,15 @@ export async function importModule<T = any>(path: string): Promise<T> {
   return i
 }
 
-export function isPackageExists(name: string, options: PackageResolvingOptions = {}) {
+export function doesPackageExist(name: string, options: PackageResolvingOptions = {}) {
   return !!resolvePackage(name, options)
+}
+
+/**
+ * @deprecated Use `doesPackageExist` instead.
+ */
+export function isPackageExists(name: string, options: PackageResolvingOptions = {}) {
+  return doesPackageExist(name, options)
 }
 
 function getPackageJsonPath(name: string, options: PackageResolvingOptions = {}) {
