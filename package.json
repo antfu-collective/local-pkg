@@ -2,7 +2,7 @@
   "name": "local-pkg",
   "type": "module",
   "version": "0.5.0",
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@9.13.2",
   "description": "Get information on local packages.",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -44,22 +44,22 @@
     "test": "vitest run && node ./test/cjs.cjs && node ./test/esm.mjs"
   },
   "dependencies": {
-    "mlly": "^1.4.2",
-    "pkg-types": "^1.0.3"
+    "mlly": "^1.7.3",
+    "pkg-types": "^1.2.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^1.0.0-beta.18",
-    "@antfu/ni": "^0.21.8",
-    "@antfu/utils": "^0.7.6",
-    "@types/chai": "^4.3.6",
-    "@types/node": "^20.8.0",
-    "bumpp": "^9.2.0",
-    "chai": "^4.3.10",
-    "eslint": "^8.50.0",
-    "esno": "^0.17.0",
+    "@antfu/eslint-config": "^3.9.2",
+    "@antfu/ni": "^0.23.1",
+    "@antfu/utils": "^0.7.10",
+    "@types/chai": "^5.0.1",
+    "@types/node": "^22.9.0",
+    "bumpp": "^9.8.1",
+    "chai": "^5.1.2",
+    "eslint": "^9.15.0",
+    "esno": "^4.8.0",
     "find-up": "^6.3.0",
-    "typescript": "^5.2.2",
+    "typescript": "^5.6.3",
     "unbuild": "^2.0.0",
-    "vitest": "^0.34.6"
+    "vitest": "^2.1.5"
   }
 }

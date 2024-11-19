@@ -42,7 +42,6 @@ resolveModule('local-pkg')
 const { importModule } = await importModule('local-pkg')
 ```
 
-
 ## Sponsors
 
 <p align="center">

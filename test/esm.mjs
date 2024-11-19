@@ -1,6 +1,7 @@
-import { join } from 'node:path'
 import { promises as fs } from 'node:fs'
+import { join } from 'node:path'
 import { expect } from 'chai'
+// eslint-disable-next-line antfu/no-import-dist
 import { getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../dist/index.mjs'
 
 console.warn('===== ESM =====')

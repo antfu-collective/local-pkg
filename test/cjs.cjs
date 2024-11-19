@@ -1,11 +1,12 @@
 const { join } = require('node:path')
-const { expect } = require('chai')
 const { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } = require('../dist/index.cjs')
 const pkgJSON = require('../package.json')
 
 console.warn('===== CJS =====')
 
 async function run() {
+  const { expect } = await import('chai')
+
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
 
   expect(isPackageExists('unbuild')).to.eq(true)

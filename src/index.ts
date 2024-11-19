@@ -1,11 +1,11 @@
-import { dirname, join, win32 } from 'node:path'
-import { createRequire } from 'node:module'
+import type { PackageJson } from 'pkg-types'
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
+import { createRequire } from 'node:module'
+import { dirname, join, win32 } from 'node:path'
 import process from 'node:process'
-import { interopDefault, resolvePathSync } from 'mlly'
-import type { PackageJson } from 'pkg-types'
 import { findUp } from 'find-up'
+import { interopDefault, resolvePathSync } from 'mlly'
 
 export interface PackageInfo {
   name: string
@@ -52,7 +52,7 @@ export function resolveModule(name: string, options: PackageResolvingOptions = {
   try {
     return _resolve(name, options)
   }
-  catch (e) {
+  catch {
     return undefined
   }
 }
