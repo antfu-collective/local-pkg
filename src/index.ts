@@ -1,4 +1,5 @@
 import { dirname, join, win32 } from 'node:path'
+import { createRequire } from 'node:module'
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
 import process from 'node:process'
@@ -27,6 +28,17 @@ export interface PackageResolvingOptions {
 function _resolve(path: string, options: PackageResolvingOptions = {}) {
   if (options.platform === 'auto' || !options.platform)
     options.platform = process.platform === 'win32' ? 'win32' : 'posix'
+
+  if (process.versions.pnp) {
+    const paths = options.paths || []
+    if (paths.length === 0)
+      paths.push(process.cwd())
+    const targetRequire = createRequire(import.meta.url)
+    try {
+      return targetRequire.resolve(path, { paths })
+    }
+    catch {}
+  }
 
   const modulePath = resolvePathSync(path, {
     url: options.paths,
