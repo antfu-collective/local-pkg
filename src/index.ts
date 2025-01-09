@@ -4,7 +4,7 @@ import fsp from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { dirname, join, win32 } from 'node:path'
 import process from 'node:process'
-import { findUp } from 'find-up'
+import { findUp } from 'find-up-simple'
 import { interopDefault, resolvePathSync } from 'mlly'
 
 export interface PackageInfo {
