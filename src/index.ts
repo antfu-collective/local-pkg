@@ -6,6 +6,7 @@ import { dirname, join, win32 } from 'node:path'
 import process from 'node:process'
 import { findUp } from 'find-up-simple'
 import { interopDefault, resolvePathSync } from 'mlly'
+import { quansyncMacro } from 'quansync'
 
 export interface PackageInfo {
   name: string
@@ -76,12 +77,17 @@ function getPackageJsonPath(name: string, options: PackageResolvingOptions = {})
   return searchPackageJSON(entry)
 }
 
-export async function getPackageInfo(name: string, options: PackageResolvingOptions = {}) {
+const readFile = quansyncMacro({
+  async: (id: string) => fs.promises.readFile(id, 'utf8'),
+  sync: id => fs.readFileSync(id, 'utf8'),
+})
+
+export const getPackageInfo = quansyncMacro(async function (name: string, options: PackageResolvingOptions = {}) {
   const packageJsonPath = getPackageJsonPath(name, options)
   if (!packageJsonPath)
     return
 
-  const packageJson: PackageJson = JSON.parse(await fs.promises.readFile(packageJsonPath, 'utf8'))
+  const packageJson: PackageJson = JSON.parse(await readFile(packageJsonPath))
 
   return {
     name,
@@ -90,23 +96,9 @@ export async function getPackageInfo(name: string, options: PackageResolvingOpti
     packageJsonPath,
     packageJson,
   }
-}
+})
 
-export function getPackageInfoSync(name: string, options: PackageResolvingOptions = {}) {
-  const packageJsonPath = getPackageJsonPath(name, options)
-  if (!packageJsonPath)
-    return
-
-  const packageJson: PackageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
-
-  return {
-    name,
-    version: packageJson.version,
-    rootPath: dirname(packageJsonPath),
-    packageJsonPath,
-    packageJson,
-  }
-}
+export const getPackageInfoSync = getPackageInfo.sync
 
 function resolvePackage(name: string, options: PackageResolvingOptions = {}) {
   try {

@@ -2,7 +2,7 @@ import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 import { expect } from 'chai'
 // eslint-disable-next-line antfu/no-import-dist
-import { getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../dist/index.mjs'
+import { getPackageInfo, getPackageInfoSync, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../dist/index.mjs'
 
 console.warn('===== ESM =====')
 
@@ -14,6 +14,7 @@ async function run() {
   expect(isPackageExists('esno')).to.eq(true)
 
   const info1 = await getPackageInfo('unbuild')
+  expect(getPackageInfoSync('unbuild')).deep.eq(info1)
   expect(!!info1).to.eq(true)
   expect(info1.name).to.eq('unbuild')
   expect(info1.packageJson.name).to.eq('unbuild')

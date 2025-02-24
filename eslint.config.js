@@ -4,4 +4,4 @@ export default antfu(
   {
     vue: false,
   },
-)
+).removeRules(['prefer-arrow-callback'])
