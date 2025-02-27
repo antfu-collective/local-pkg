@@ -1,7 +1,7 @@
 {
   "name": "local-pkg",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "packageManager": "pnpm@10.4.1",
   "description": "Get information on local packages.",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
