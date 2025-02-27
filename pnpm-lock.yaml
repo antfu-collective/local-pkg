@@ -15,8 +15,8 @@ importers:
         specifier: ^1.3.1
         version: 1.3.1
       quansync:
-        specifier: ^0.0.6
-        version: 0.0.6
+        specifier: ^0.1.0
+        version: 0.1.0
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^4.3.0
@@ -55,8 +55,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1(typescript@5.7.3)
       unplugin-quansync:
-        specifier: ^0.0.0
-        version: 0.0.0
+        specifier: ^0.2.0
+        version: 0.2.0(quansync@0.1.0)
       vitest:
         specifier: ^3.0.6
         version: 3.0.6(@types/debug@4.1.12)(@types/node@22.13.5)(jiti@2.4.2)(tsx@4.19.3)(yaml@2.7.0)
@@ -2213,11 +2213,8 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  quansync@0.0.5:
-    resolution: {integrity: sha512-4WPXIJiQnktcQM8+qzNsEht5gVMpc2ROT+61MOIvNElvo6qTkIb4nvUg8h1QTYBKMBcqw+gHgYzsKfj1z7FMOg==}
-
-  quansync@0.0.6:
-    resolution: {integrity: sha512-HcbyhJQDZRIkPTPsiWajuL9i9e8GIZmT5EUZVO7VSn6j/UBrWRJnRb+HR4Mkz9lErwCPDOf7z2UhUuS6tJyZvg==}
+  quansync@0.1.0:
+    resolution: {integrity: sha512-owZss3L63Zi7W1djlhIfLC36Za3izdi85SU+YKNTWzuRAyWoIL3tSotb/HqhPmZAgYVvp3x6peIapFimKgKaEQ==}
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -2480,9 +2477,11 @@ packages:
   unist-util-visit@5.0.0:
     resolution: {integrity: sha512-MR04uvD+07cwl/yhVuVWAtw+3GOR/knlL55Nd/wAdblk27GCVt3lqpTivy/tkJcZoNPzTwS1Y+KMojlLDhoTzg==}
 
-  unplugin-quansync@0.0.0:
-    resolution: {integrity: sha512-D9zpnG08ti2Ilw68xheLj8Q1Raahmlg6tNvmfAOakykh4l+7x7M1fBcah2zHexj+BnaW6Idfi8985d5Xq/0QCg==}
+  unplugin-quansync@0.2.0:
+    resolution: {integrity: sha512-KW4AOXEved+xEiRsOr6C3RwVX6ga+AMxpoyGdqyr5IspvNBWslCmIzSUkmNbCDlhQlzfTXf7Y/0dsWFC5nVF5g==}
     engines: {node: '>=18.12.0'}
+    peerDependencies:
+      quansync: '>=0.1.0'
 
   unplugin-utils@0.2.4:
     resolution: {integrity: sha512-8U/MtpkPkkk3Atewj1+RcKIjb5WBimZ/WSLhhR3w6SsIj8XJuKTacSP8g+2JhfSGw0Cb125Y+2zA/IzJZDVbhA==}
@@ -4930,9 +4929,7 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  quansync@0.0.5: {}
-
-  quansync@0.0.6: {}
+  quansync@0.1.0: {}
 
   queue-microtask@1.2.3: {}
 
@@ -5224,11 +5221,11 @@ snapshots:
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
 
-  unplugin-quansync@0.0.0:
+  unplugin-quansync@0.2.0(quansync@0.1.0):
     dependencies:
       ast-kit: 1.4.0
       magic-string-ast: 0.7.0
-      quansync: 0.0.5
+      quansync: 0.1.0
       unplugin: 2.2.0
       unplugin-utils: 0.2.4
 
