@@ -63,5 +63,10 @@
     "unbuild": "^3.3.1",
     "unplugin-quansync": "^0.2.0",
     "vitest": "^3.0.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
