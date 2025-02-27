@@ -14,10 +14,10 @@ async function run() {
   expect(isPackageExists('esno')).to.eq(true)
 
   const info1 = await getPackageInfo('unbuild')
-  expect(getPackageInfoSync('unbuild')).deep.eq(info1)
   expect(!!info1).to.eq(true)
   expect(info1.name).to.eq('unbuild')
   expect(info1.packageJson.name).to.eq('unbuild')
+  expect(getPackageInfoSync('unbuild')).deep.eq(info1)
 
   const info2 = await getPackageInfo('hi')
   expect(!!info2).to.eq(false)

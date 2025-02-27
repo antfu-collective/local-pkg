@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { getPackageInfo, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../src'
+import { getPackageInfo, getPackageInfoSync, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../src'
 
 it('test by source', async () => {
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
@@ -14,6 +14,7 @@ it('test by source', async () => {
   expect(!!info1).to.eq(true)
   expect(info1?.name).to.eq('unbuild')
   expect(info1?.packageJson.name).to.eq('unbuild')
+  expect(getPackageInfoSync('unbuild')).deep.eq(info1)
 
   const info2 = await getPackageInfo('hi')
   expect(!!info2).to.eq(false)

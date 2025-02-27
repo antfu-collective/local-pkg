@@ -1,5 +1,5 @@
 const { join } = require('node:path')
-const { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON } = require('../dist/index.cjs')
+const { getPackageInfo, isPackageExists, resolveModule, importModule, loadPackageJSON, getPackageInfoSync } = require('../dist/index.cjs')
 const pkgJSON = require('../package.json')
 
 console.warn('===== CJS =====')
@@ -17,6 +17,7 @@ async function run() {
   expect(!!info1).to.eq(true)
   expect(info1.name).to.eq('unbuild')
   expect(info1.packageJson.name).to.eq('unbuild')
+  expect(getPackageInfoSync('unbuild')).deep.eq(info1)
 
   const info2 = await getPackageInfo('hi')
   expect(!!info2).to.eq(false)
