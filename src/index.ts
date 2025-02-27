@@ -5,7 +5,7 @@ import { dirname, join, win32 } from 'node:path'
 import process from 'node:process'
 import { findUp as _findUp, findUpSync } from 'find-up-simple'
 import { interopDefault, resolvePathSync } from 'mlly'
-import { quansyncMacro } from 'quansync'
+import { quansync } from 'quansync/macro'
 
 export interface PackageInfo {
   name: string
@@ -76,12 +76,12 @@ function getPackageJsonPath(name: string, options: PackageResolvingOptions = {})
   return searchPackageJSON(entry)
 }
 
-const readFile = quansyncMacro({
+const readFile = quansync({
   async: (id: string) => fs.promises.readFile(id, 'utf8'),
   sync: id => fs.readFileSync(id, 'utf8'),
 })
 
-export const getPackageInfo = quansyncMacro(async function (name: string, options: PackageResolvingOptions = {}) {
+export const getPackageInfo = quansync(async function (name: string, options: PackageResolvingOptions = {}) {
   const packageJsonPath = getPackageJsonPath(name, options)
   if (!packageJsonPath)
     return
@@ -133,12 +133,12 @@ function searchPackageJSON(dir: string) {
   return packageJsonPath
 }
 
-const findUp = quansyncMacro({
+const findUp = quansync({
   sync: findUpSync,
   async: _findUp,
 })
 
-export const loadPackageJSON = quansyncMacro(async function (cwd = process.cwd()): Promise<PackageJson | null> {
+export const loadPackageJSON = quansync(async function (cwd = process.cwd()): Promise<PackageJson | null> {
   const path = await findUp('package.json', { cwd })
   if (!path || !fs.existsSync(path))
     return null
@@ -146,7 +146,7 @@ export const loadPackageJSON = quansyncMacro(async function (cwd = process.cwd()
 })
 export const loadPackageJSONSync = loadPackageJSON.sync
 
-export const isPackageListed = quansyncMacro(async function (name: string, cwd?: string) {
+export const isPackageListed = quansync(async function (name: string, cwd?: string) {
   const pkg = await loadPackageJSON(cwd) || {}
 
   return (name in (pkg.dependencies || {})) || (name in (pkg.devDependencies || {}))
