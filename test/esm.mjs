@@ -2,7 +2,7 @@ import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 import { expect } from 'chai'
 // eslint-disable-next-line antfu/no-import-dist
-import { getPackageInfo, getPackageInfoSync, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../dist/index.mjs'
+import { getPackageInfo, getPackageInfoSync, importModule, isPackageExists, isPackageListed, isPackageListedSync, loadPackageJSON, loadPackageJSONSync, resolveModule } from '../dist/index.mjs'
 
 console.warn('===== ESM =====')
 
@@ -29,7 +29,12 @@ async function run() {
   const { slash } = (await importModule('@antfu/utils'))
   expect(slash('foo\\bar')).to.eq('foo/bar')
 
-  expect(await loadPackageJSON()).to.eql(JSON.parse(await fs.readFile('./package.json'), 'utf-8'))
+  const json = await loadPackageJSON()
+  expect(json).to.eql(JSON.parse(await fs.readFile('./package.json', 'utf-8')))
+  expect(loadPackageJSONSync()).deep.eq(json)
+
+  expect(await isPackageListed('eslint')).eq(true)
+  expect(isPackageListedSync('eslint')).eq(true)
 }
 
 run()

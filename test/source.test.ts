@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { getPackageInfo, getPackageInfoSync, importModule, isPackageExists, loadPackageJSON, resolveModule } from '../src'
+import { getPackageInfo, getPackageInfoSync, importModule, isPackageExists, isPackageListed, isPackageListedSync, loadPackageJSON, loadPackageJSONSync, resolveModule } from '../src'
 
 it('test by source', async () => {
   expect(resolveModule('@antfu/utils')).to.contain(join('node_modules', '@antfu', 'utils'))
@@ -26,5 +26,10 @@ it('test by source', async () => {
   const { slash } = (await importModule('@antfu/utils'))
   expect(slash('foo\\bar')).to.eq('foo/bar')
 
-  expect(await loadPackageJSON()).to.eql(JSON.parse(await fs.readFile('./package.json', 'utf-8')))
+  const json = await loadPackageJSON()
+  expect(json).to.eql(JSON.parse(await fs.readFile('./package.json', 'utf-8')))
+  expect(loadPackageJSONSync()).deep.eq(json)
+
+  expect(await isPackageListed('eslint')).eq(true)
+  expect(isPackageListedSync('eslint')).eq(true)
 })

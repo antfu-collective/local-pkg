@@ -1,10 +1,9 @@
 import type { PackageJson } from 'pkg-types'
 import fs from 'node:fs'
-import fsp from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { dirname, join, win32 } from 'node:path'
 import process from 'node:process'
-import { findUp } from 'find-up-simple'
+import { findUp as _findUp, findUpSync } from 'find-up-simple'
 import { interopDefault, resolvePathSync } from 'mlly'
 import { quansyncMacro } from 'quansync'
 
@@ -134,15 +133,22 @@ function searchPackageJSON(dir: string) {
   return packageJsonPath
 }
 
-export async function loadPackageJSON(cwd = process.cwd()): Promise<PackageJson | null> {
-  const path = await findUp('package.json', { cwd } as any)
+const findUp = quansyncMacro({
+  sync: findUpSync,
+  async: _findUp,
+})
+
+export const loadPackageJSON = quansyncMacro(async function (cwd = process.cwd()): Promise<PackageJson | null> {
+  const path = await findUp('package.json', { cwd })
   if (!path || !fs.existsSync(path))
     return null
-  return JSON.parse(await fsp.readFile(path, 'utf-8'))
-}
+  return JSON.parse(await readFile(path))
+})
+export const loadPackageJSONSync = loadPackageJSON.sync
 
-export async function isPackageListed(name: string, cwd?: string) {
+export const isPackageListed = quansyncMacro(async function (name: string, cwd?: string) {
   const pkg = await loadPackageJSON(cwd) || {}
 
   return (name in (pkg.dependencies || {})) || (name in (pkg.devDependencies || {}))
-}
+})
+export const isPackageListedSync = isPackageListed.sync
