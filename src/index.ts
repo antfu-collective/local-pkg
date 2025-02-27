@@ -81,7 +81,7 @@ const readFile = quansync({
   sync: id => fs.readFileSync(id, 'utf8'),
 })
 
-export const getPackageInfo = quansync(async function (name: string, options: PackageResolvingOptions = {}) {
+export const getPackageInfo = quansync(async (name: string, options: PackageResolvingOptions = {}) => {
   const packageJsonPath = getPackageJsonPath(name, options)
   if (!packageJsonPath)
     return
@@ -138,7 +138,7 @@ const findUp = quansync({
   async: _findUp,
 })
 
-export const loadPackageJSON = quansync(async function (cwd = process.cwd()): Promise<PackageJson | null> {
+export const loadPackageJSON = quansync(async (cwd = process.cwd()): Promise<PackageJson | null> => {
   const path = await findUp('package.json', { cwd })
   if (!path || !fs.existsSync(path))
     return null
@@ -146,7 +146,7 @@ export const loadPackageJSON = quansync(async function (cwd = process.cwd()): Pr
 })
 export const loadPackageJSONSync = loadPackageJSON.sync
 
-export const isPackageListed = quansync(async function (name: string, cwd?: string) {
+export const isPackageListed = quansync(async (name: string, cwd?: string) => {
   const pkg = await loadPackageJSON(cwd) || {}
 
   return (name in (pkg.dependencies || {})) || (name in (pkg.devDependencies || {}))
