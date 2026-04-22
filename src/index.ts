@@ -65,7 +65,7 @@ export async function importModule<T = any>(path: string): Promise<T> {
 }
 
 export function isPackageExists(name: string, options: PackageResolvingOptions = {}) {
-  return !!resolvePackage(name, options)
+  return !!getPackageJsonPath(name, options)
 }
 
 function getPackageJsonPath(name: string, options: PackageResolvingOptions = {}) {
@@ -134,23 +134,6 @@ export const getPackageInfo = quansync(async (name: string, options: PackageReso
 })
 
 export const getPackageInfoSync = getPackageInfo.sync
-
-function resolvePackage(name: string, options: PackageResolvingOptions = {}) {
-  try {
-    return _resolve(`${name}/package.json`, options)
-  }
-  catch {
-  }
-  try {
-    return _resolve(name, options)
-  }
-  catch (e: any) {
-    // compatible with nodejs and mlly error
-    if (e.code !== 'MODULE_NOT_FOUND' && e.code !== 'ERR_MODULE_NOT_FOUND')
-      console.error(e)
-    return false
-  }
-}
 
 function searchPackageJSON(dir: string) {
   let packageJsonPath
