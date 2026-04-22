@@ -35,6 +35,14 @@ async function run() {
 
   expect(await isPackageListed('eslint')).eq(true)
   expect(isPackageListedSync('eslint')).eq(true)
+
+  // #16: packages with multiple bundled package.jsons (exports field doesn't expose ./package.json)
+  const info4 = await getPackageInfo('eslint-plugin-better-tailwindcss')
+  expect(!!info4).to.eq(true)
+  expect(info4.name).to.eq('eslint-plugin-better-tailwindcss')
+  expect(info4.version).to.eq('3.8.0')
+  expect(info4.packageJson.name).to.eq('eslint-plugin-better-tailwindcss')
+  expect(getPackageInfoSync('eslint-plugin-better-tailwindcss')).deep.eq(info4)
 }
 
 run()

@@ -69,7 +69,43 @@ export function isPackageExists(name: string, options: PackageResolvingOptions =
 }
 
 function getPackageJsonPath(name: string, options: PackageResolvingOptions = {}) {
-  const entry = resolvePackage(name, options)
+  try {
+    const resolvedPackageJson = _resolve(`${name}/package.json`, options)
+    if (resolvedPackageJson)
+      return resolvedPackageJson
+  }
+  catch {}
+
+  // Walk up `node_modules` directories searching for `<name>/package.json`.
+  // Borrowed from import-meta-resolve: https://github.com/wooorm/import-meta-resolve
+  const bases = options.paths?.length ? options.paths : [process.cwd()]
+  for (const base of bases) {
+    let currDirectory = base
+    try {
+      if (!fs.statSync(currDirectory).isDirectory())
+        currDirectory = dirname(currDirectory)
+    }
+    catch {}
+
+    let lastDirectory: string | undefined
+    while (currDirectory !== lastDirectory) {
+      const packageDir = join(currDirectory, 'node_modules', name)
+      try {
+        if (fs.statSync(packageDir).isDirectory()) {
+          const packageJsonPath = join(packageDir, 'package.json')
+          if (fs.existsSync(packageJsonPath))
+            return packageJsonPath
+        }
+      }
+      catch {}
+
+      lastDirectory = currDirectory
+      currDirectory = dirname(currDirectory)
+    }
+  }
+
+  // Fallback: resolve the entry point and walk up (handles PnP and other special envs)
+  const entry = resolveModule(name, options)
   if (!entry)
     return
 
