@@ -2,7 +2,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/local-pkg?color=a1b858&label=)](https://www.npmjs.com/package/local-pkg)
 
-Get information on local packages. Works on both CJS and ESM.
+Get information on local packages.
 
 ## Install
 
@@ -34,11 +34,10 @@ await getPackageInfo('local-pkg')
  * }
  */
 
-// similar to `require.resolve` but works also in ESM
+// similar to `require.resolve` but works in ESM
 resolveModule('local-pkg')
-// '/path/to/node_modules/local-pkg/dist/index.cjs'
+// '/path/to/node_modules/local-pkg/dist/index.mjs'
 
-// similar to `await import()` but works also in CJS
 const { importModule } = await importModule('local-pkg')
 ```
 
@@ -46,7 +45,7 @@ const { importModule } = await importModule('local-pkg')
 
 <p align="center">
   <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
+    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg' alt="Sponsors"/>
   </a>
 </p>
 

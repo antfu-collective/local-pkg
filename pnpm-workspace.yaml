@@ -1,0 +1,17 @@
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@vitest/expect@4.1.7'
+  - '@vitest/mocker@4.1.7'
+  - '@vitest/pretty-format@4.1.7'
+  - '@vitest/runner@4.1.7'
+  - '@vitest/snapshot@4.1.7'
+  - '@vitest/spy@4.1.7'
+  - '@vitest/utils@4.1.7'
+  - vitest@4.1.7
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
+onlyBuiltDependencies:
+  - esbuild
