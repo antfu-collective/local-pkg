@@ -52,6 +52,7 @@
     "bumpp": "^11.1.0",
     "chai": "^6.2.2",
     "eslint": "^10.4.0",
+    "eslint-plugin-better-tailwindcss": "3.8.0",
     "find-up-simple": "^1.0.1",
     "tsdown": "^0.22.0",
     "tsx": "^4.22.3",
