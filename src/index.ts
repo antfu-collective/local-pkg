@@ -110,7 +110,8 @@ function resolvePackage(name: string, options: PackageResolvingOptions = {}) {
   }
   catch (e: any) {
     // compatible with nodejs and mlly error
-    if (e.code !== 'MODULE_NOT_FOUND' && e.code !== 'ERR_MODULE_NOT_FOUND')
+    // ENOTDIR: a path segment on the walk is a file, same as not-found
+    if (e.code !== 'MODULE_NOT_FOUND' && e.code !== 'ERR_MODULE_NOT_FOUND' && e.code !== 'ENOTDIR')
       console.error(e)
     return false
   }
