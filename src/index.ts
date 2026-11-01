@@ -1,10 +1,11 @@
 import type { PackageJson } from 'pkg-types'
 import fs from 'node:fs'
-import { createRequire } from 'node:module'
+import { createRequire, isBuiltin } from 'node:module'
 import { dirname, join, win32 } from 'node:path'
 import process from 'node:process'
+import { fileURLToPath } from 'node:url'
 import { findUp as _findUp, findUpSync } from 'find-up-simple'
-import { interopDefault, resolvePathSync } from 'mlly'
+import { interopDefault, normalizeid, pathToFileURL, resolvePathSync } from 'mlly'
 import { quansync } from 'quansync/macro'
 
 export interface PackageInfo {
@@ -99,7 +100,58 @@ export const getPackageInfo = quansync(async (name: string, options: PackageReso
 
 export const getPackageInfoSync = getPackageInfo.sync
 
+/**
+ * False only when `name` can't resolve from `paths`: no ancestor has it in `node_modules`
+ * (mlly also tries `name` plus each extension) and no ancestor `package.json` is that
+ * package. Shared ancestors are checked once, so a miss no longer costs mlly's full
+ * search per path.
+ */
+function mayBeInstalled(name: string, paths: string[] = []) {
+  if (process.versions.pnp || !name || /^[.#/\\]|:/.test(name) || isBuiltin(name))
+    return true
+
+  const parts = name.split('/')
+  const pkg = name.startsWith('@') ? parts.slice(0, 2).join('/') : parts[0]
+  const candidates = [pkg, ...['.mjs', '.cjs', '.js', '.json'].map(ext => pkg + ext)]
+  const roots = paths.filter(Boolean)
+  if (!roots.length)
+    roots.push(pathToFileURL(process.cwd()))
+  const seen = new Set<string>()
+
+  for (const path of roots) {
+    let dir: string
+    try {
+      // The same URL mlly resolves from
+      dir = fileURLToPath(new URL(normalizeid(path)))
+    }
+    catch {
+      return true
+    }
+    while (!seen.has(dir)) {
+      seen.add(dir)
+      const modules = join(dir, 'node_modules')
+      if (fs.existsSync(modules) && candidates.some(candidate => fs.existsSync(join(modules, candidate))))
+        return true
+      const packageJsonPath = join(dir, 'package.json')
+      if (fs.existsSync(packageJsonPath)) {
+        try {
+          if (candidates.includes(JSON.parse(fs.readFileSync(packageJsonPath, 'utf8')).name))
+            return true
+        }
+        catch {
+          // An unreadable package.json can't rule the package out; let mlly decide
+          return true
+        }
+      }
+      dir = dirname(dir)
+    }
+  }
+  return false
+}
+
 function resolvePackage(name: string, options: PackageResolvingOptions = {}) {
+  if (!mayBeInstalled(name, options.paths))
+    return false
   try {
     return _resolve(`${name}/package.json`, options)
   }
